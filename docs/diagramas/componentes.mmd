@@ -1,0 +1,41 @@
+flowchart TB
+  subgraph Navegador["Navegador (GitHub Pages, sitio estático)"]
+    direction TB
+    Router["React Router<br/>createBrowserRouter + basename"]
+    Layout["RootLayout<br/>Header · Footer · ErrorBoundary · Suspense"]
+    Tour["TourProvider<br/>«Explorar Panamá Swim» (10 pasos)"]
+    subgraph Paginas["pages/ (carga diferida por ruta)"]
+      Home["Home"]
+      Cal["Calendar · CompetitionPage"]
+      Res["Results"]
+      Sw["Swimmers · SwimmerPage"]
+      Std["Standards (comparador)"]
+      Clubs["Clubs · ClubPage · Coach"]
+      Admin["Admin"]
+    end
+    subgraph Comp["components/"]
+      Chart["ProgressChart (Recharts)"]
+      Bits["Time · StatusBadge · CourseBadge · Photo"]
+    end
+    Store["DataProvider / useData()<br/>estado + acciones"]
+    subgraph Servicios["services/ (lógica pura, probada)"]
+      SCal["calendar.ts"]
+      SRes["results.ts"]
+      SStd["standards.ts"]
+      SCsv["csv.ts"]
+      SQ["queries.ts · categories.ts"]
+    end
+    Utils["utils/time.ts<br/>ms enteros ⇄ m:ss.cc"]
+    Repo["LocalStorageRepository<br/>(interfaz DataRepository)"]
+    LS[("localStorage<br/>panama-swim:datos:v1")]
+    Seed[["data/demo-dataset.json<br/>(sintético, versionado)"]]
+  end
+  Router --> Layout --> Paginas
+  Layout --> Tour
+  Paginas --> Comp
+  Paginas --> Store
+  Paginas --> Servicios
+  Servicios --> Utils
+  Store --> Repo --> LS
+  Repo -. "primera carga / restaurar" .-> Seed
+  Store -. "segunda fase" .-> API["API + PostgreSQL<br/>(no implementado)"]

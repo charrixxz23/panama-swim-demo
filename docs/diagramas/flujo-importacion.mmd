@@ -1,0 +1,10 @@
+flowchart LR
+  A([CSV]) --> B[parseCsv<br/>BOM, comillas, , o ;]
+  B --> C{validateResultsCsv}
+  C -->|columnas · tipos · ids · prueba de la competencia<br/>tiempo · estado · categoría · rama<br/>duplicados · carril ocupado| D{¿Errores?}
+  D -- Sí --> E[/Informe por línea y columna<br/>nada se importa/]
+  D -- No --> F[Lote «pendiente»<br/>resultados published = false]
+  F --> G{Revisión}
+  G -- Publicar --> H[Visibles en resultados,<br/>perfiles, clubes y comparador]
+  G -- Descartar --> I[Se eliminan las filas del lote]
+  H --> J[(localStorage)]

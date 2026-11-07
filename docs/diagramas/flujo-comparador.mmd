@@ -1,0 +1,18 @@
+flowchart TD
+  A([Usuario elige competencia, categoría, rama,<br/>distancia, estilo y piscina]) --> B{¿La piscina elegida es la<br/>de la competencia?}
+  B -- No --> X1[/"Aviso: no se comparan ni convierten<br/>tiempos de otra piscina"/]
+  B -- Sí --> C{¿Existe marca mínima publicada<br/>para esa combinación exacta?}
+  C -- No --> X2[/"Aviso: no hay marca mínima registrada"/]
+  C -- Sí --> D{¿Escribió un tiempo?}
+  D -- Sí --> E{¿Formato válido?<br/>parseTime → ms enteros}
+  E -- No --> X3[/"Error de formato con ejemplo"/]
+  E -- Sí --> G
+  D -- No --> F{¿Nadador de demostración<br/>con marca en esa prueba y piscina?}
+  F -- No --> X4[/"Pide escribir un tiempo"/]
+  F -- Sí --> G[Tiempo = mejor marca registrada]
+  G --> H["diff = tiempo − marca<br/>% = diff ÷ marca × 100"]
+  H --> I{diff ≤ 0}
+  I -- Sí --> J[/"Alcanza la marca objetivo<br/>(no equivale a clasificación oficial)"/]
+  I -- No --> K[/"Necesitas reducir X segundos"/]
+  J --> L[Gráfica de evolución con línea de marca]
+  K --> L

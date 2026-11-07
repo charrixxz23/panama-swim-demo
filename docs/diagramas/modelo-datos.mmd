@@ -1,0 +1,21 @@
+erDiagram
+  CATEGORY ||--o{ SWIM_EVENT : "categoryId"
+  POOL ||--o{ COMPETITION : "poolId"
+  CLUB ||--o{ SWIMMER : "clubId"
+  CLUB ||--o{ COACH : "clubId"
+  COMPETITION ||--o{ SWIM_EVENT : "competitionId"
+  COMPETITION ||--o{ RESULT : "competitionId"
+  COMPETITION ||--o{ QUALIFYING_STANDARD : "competitionId"
+  SWIM_EVENT ||--o{ RESULT : "eventId"
+  SWIMMER ||--o{ RESULT : "swimmerId"
+  IMPORT_BATCH ||--o{ RESULT : "importBatchId"
+  CATEGORY { string id "9-10 … 18+" int minAge int maxAge }
+  POOL { string id string name string province string[] courses "LCM | SCM" bool real }
+  CLUB { string id string name string province bool synthetic }
+  COACH { string id string name string clubId bool synthetic }
+  SWIMMER { string id string firstName string lastName string gender int birthYear "solo el año" bool published }
+  COMPETITION { string id string type date startDate date endDate string course "LCM | SCM" string[] categories date regOpens date regCloses bool published }
+  SWIM_EVENT { string id int number int distance string stroke string gender string categoryId }
+  RESULT { string id int heat "serie" int lane "carril" int timeMs "null si DQ, DNS, DNF" string status "OK DQ DNS DNF" string source bool published }
+  QUALIFYING_STANDARD { string id string categoryId string gender int distance string stroke string course int timeMs bool published }
+  IMPORT_BATCH { string id string fileName int rows string status "pendiente publicado descartado" }
